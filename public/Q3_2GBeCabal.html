@@ -5,29 +5,34 @@
   <title>Club Application Form!!</title>
   <style>
     form {
-      width: 500px;
+      width: 600px;
       margin: auto;
-      background-color: #f9f9f9;
+      background-color: #1b1919;
       font-family: Arial, sans-serif;
+      border: darkgray 2px solid;
+      border-radius: 19px;
     }
     fieldset {
       margin-bottom: 25px;
-      padding: 10px;
+      padding: 40px;
       border: 1px;
     }
     legend {
       font-weight: bold;
+      color: lightgray;
     }
     label {
       display: block;
       margin-bottom: 10px;
+      color: lightgray;
     }
     input, select, textarea {
       width: 100%;
       padding: 6px;
       margin-top: 4px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 100px;
+      color:#1b1919
     }
     input:focus, select:focus, textarea:focus {
       border-color: #0066cc;
@@ -35,8 +40,8 @@
       outline: none;
     }
     .error {
-      border: 2px solid red;
-      background-color: #ffe6e6;
+      border: 2px solid rgb(255, 61, 61);
+      background-color: #ffb1b1;
     }
     .buttons {
       text-align: center;
@@ -46,16 +51,17 @@
       padding: 8px 16px;
       border: none;
       border-radius: 4px;
-      background-color: #0066cc;
-      color: white;
+      background-color: #2e3135;
+      color: rgb(253, 253, 253);
       cursor: pointer;
     }
     button:hover {
-      background-color: #004c99;
+      background-color: #b3c4d4;
+      color: #1b1919;
     }
   </style>
 </head>
-<body>
+<body style="background-color: #131111;">
   <form method="post" action="submit" 
         onsubmit="return confirm('Do you want to submit this application?');" 
         onreset="return confirm('Do you really want to reset the form?');">
