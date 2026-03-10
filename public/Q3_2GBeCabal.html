@@ -59,80 +59,77 @@
       </label>
     </fieldset>
 
-    <!-- internship -->
-    <fieldset>
-      <legend>Internship Status</legend>
-      <label>*Select one:</label>
-      <label>
-        <input type="radio" name="status" value="intern" required> Intern
-      </label>
-      <label>
-        <input type="radio" name="status" value="extern" required> Extern
-      </label>
-    </fieldset>
-
-    <!-- club preference -->
-    <fieldset>
-      <legend>Club Preference</legend>
-      <label>
-        *Preferred Organization / Club:
-        <select name="club" required onblur="check(this)">
-          <option value="">-select-</option>
-          <option value="science">Science Club</option>
-          <option value="math">Math Club</option>
-          <option value="arts">Arts Club</option>
-          <option value="sports">Sports Club</option>
-          <option value="music">Music Club</option>
-        </select>
-      </label>
-      <label>
-        *Why do you want to join?
-        <textarea name="reason" rows="4" required onblur="check(this)"></textarea>
-      </label>
-    </fieldset>
-
-    <!-- buttons -->
-    <div class="buttons">
+    <form onsubmit="saveForm(event)">
+      <!-- internship -->
+      <fieldset>
+        <legend>Internship Status</legend>
+        <label>*Select one:</label>
+        <label>
+          <input type="radio" name="status" value="intern" required> Intern
+        </label>
+        <label>
+          <input type="radio" name="status" value="extern" required> Extern
+        </label>
+      </fieldset>
+    
+      <!-- club preference -->
+      <fieldset>
+        <legend>Club Preference</legend>
+        <label>
+          *Preferred Organization / Club:
+          <select name="club" required>
+            <option value="">-select-</option>
+            <option value="science">Science Club</option>
+            <option value="math">Math Club</option>
+            <option value="arts">Arts Club</option>
+            <option value="sports">Sports Club</option>
+            <option value="music">Music Club</option>
+          </select>
+        </label>
+        <label>
+          *Why do you want to join?
+          <textarea name="reason" rows="4" required></textarea>
+        </label>
+      </fieldset>
+    
+      <!-- buttons -->
       <button type="submit">Submit</button>
-      <button type="reset">Reset</button>
-      <button type="button" onclick="window.location.href='viewSignUps.html'">View Signups</button>
-    </div>
-  </form>
-
-  <script>
-    function saveForm(event) {
-    event.preventDefault(); // Prevent the form from submitting normally
-
-    // Retrieve form data
-    const status = document.querySelector('input[name="status"]:checked')?.value;
-    const club = document.querySelector('select[name="club"]').value;
-    const reason = document.querySelector('textarea[name="reason"]').value;
-
-    // Validate required fields
-    if (!status || !club || !reason) {
-      alert('Please fill out all required fields.');
-      return;
-    }
-
-    // Create a signup object
-    const signup = {
-      status,
-      club,
-      reason
-    };
-
-    // Retrieve existing signups from localStorage
-    const signups = JSON.parse(localStorage.getItem('Q3_2GBeCabalSignups')) || [];
-
-    // Add the new signup to the array
-    signups.push(signup);
-
-    // Save the updated array back to localStorage
-    localStorage.setItem('Q3_2GBeCabalSignups', JSON.stringify(signups));
-
-    // Notify the user
-    alert('Your signup has been saved!');
-  }
-  </script>
-</body>
+    </form>
+    
+    <script>
+      function saveForm(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+    
+        // Retrieve form data
+        const status = document.querySelector('input[name="status"]:checked')?.value;
+        const club = document.querySelector('select[name="club"]').value;
+        const reason = document.querySelector('textarea[name="reason"]').value;
+    
+        // Validate required fields
+        if (!status || !club || !reason) {
+          alert('Please fill out all required fields.');
+          return;
+        }
+    
+        // Create a signup object
+        const signup = {
+          status,
+          club,
+          reason
+        };
+    
+        // Retrieve existing signups from localStorage
+        const signups = JSON.parse(localStorage.getItem('Q3_2GBeCabalSignups')) || [];
+    
+        // Add the new signup to the array
+        signups.push(signup);
+    
+        // Save the updated array back to localStorage
+        localStorage.setItem('Q3_2GBeCabalSignups', JSON.stringify(signups));
+    
+        // Notify the user
+        alert('Your signup has been saved!');
+      }
+    </script>
+  </body>
 </html>
