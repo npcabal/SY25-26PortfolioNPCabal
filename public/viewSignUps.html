@@ -19,8 +19,17 @@
     <fieldset><br>
       <label><strong>Signups</strong></label>
     </fieldset>
-    <fieldset><label>Here are the signups</label></fieldset> 
-    <button type="button" onclick="displaySignups()">View Signups</button>
+    <fieldset>
+      <label>Filter by Club:</label>
+      <select id="clubFilter" onchange="filterSignups()">
+        <option value="all">All</option>
+        <option value="science">Science Club</option>
+        <option value="math">Math Club</option>
+        <option value="arts">Arts Club</option>
+        <option value="sports">Sports Club</option>
+        <option value="music">Music Club</option>
+      </select>
+    </fieldset>
     <table id="results" border="1">
       <thead>
         <tr>
@@ -40,20 +49,34 @@
       </tbody>
     </table>
     <p id="count"></p>
+    <p id="message" style="color: red;"></p>
     <button type="button" onclick="window.location.href='Q3_2GBeCabal.html'">Back</button><br>
   </form>
 
   <script>
-    function displaySignups() {
-      // Retrieve signups from localStorage
+    // Function to display signups based on the selected club filter
+    function filterSignups() {
+      const clubFilter = document.getElementById('clubFilter').value;
       const signups = JSON.parse(localStorage.getItem('Q3_2GBeCabalSignups')) || [];
-
-      // Get the table body element
       const tableBody = document.querySelector('#results tbody');
-      tableBody.innerHTML = ''; // Clear existing rows
+      const message = document.getElementById('message');
+      const count = document.getElementById('count');
 
-      // Populate the table with signups
-      signups.forEach((signup) => {
+      tableBody.innerHTML = ''; // Clear existing rows
+      message.textContent = ''; // Clear any previous messages
+
+      // Filter signups based on the selected club
+      const filteredSignups = clubFilter === 'all' ? signups : signups.filter(signup => signup.club === clubFilter);
+
+      if (filteredSignups.length === 0) {
+        // Display message if no signups are found
+        message.textContent = clubFilter === 'all' ? 'No sign-ups available.' : `No sign-ups for the ${clubFilter} club.`;
+        count.textContent = '';
+        return;
+      }
+
+      // Populate the table with filtered signups
+      filteredSignups.forEach(signup => {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${signup.studentID}</td>
@@ -69,9 +92,29 @@
         tableBody.appendChild(row);
       });
 
-      // Update the count
-      document.getElementById('count').textContent = `Total Signups: ${signups.length}`;
+      // Update the total count
+      count.textContent = `Total Signups: ${filteredSignups.length}`;
     }
+
+    // Initial display of all signups
+    function displaySignups() {
+      const signups = JSON.parse(localStorage.getItem('Q3_2GBeCabalSignups')) || [];
+      const message = document.getElementById('message');
+
+      if (signups.length === 0) {
+        // Display message if no signups are found
+        message.textContent = 'No sign-ups available.';
+        document.getElementById('count').textContent = '';
+        return;
+      }
+
+      // Set the filter to "all" and display all signups
+      document.getElementById('clubFilter').value = 'all';
+      filterSignups();
+    }
+
+    // Call displaySignups on page load
+    window.onload = displaySignups;
   </script>
 </body>
 </html>
