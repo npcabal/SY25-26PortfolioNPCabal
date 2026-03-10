@@ -79,3 +79,26 @@
     p {
         color: blue;
     }
+    .stars {
+      font-size: 24px;
+      cursor: pointer;
+      letter-spacing: 5px;
+    }
+    .star {
+      color: lightgray;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .star.filled {
+      color: #FFD700;
+    }
+    .movie-item {
+      background-color: #262424;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      color: lightgray;
+    }
+    .movie-item strong {
+      color: #FFD700;
+    }
