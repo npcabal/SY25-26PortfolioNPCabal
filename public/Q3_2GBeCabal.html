@@ -100,13 +100,39 @@
   </form>
 
   <script>
-    function check(field) {
-      if (!field.value.trim()) {
-        field.classList.add("error");
-      } else {
-        field.classList.remove("error");
-      }
+    function saveForm(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+
+    // Retrieve form data
+    const status = document.querySelector('input[name="status"]:checked')?.value;
+    const club = document.querySelector('select[name="club"]').value;
+    const reason = document.querySelector('textarea[name="reason"]').value;
+
+    // Validate required fields
+    if (!status || !club || !reason) {
+      alert('Please fill out all required fields.');
+      return;
     }
+
+    // Create a signup object
+    const signup = {
+      status,
+      club,
+      reason
+    };
+
+    // Retrieve existing signups from localStorage
+    const signups = JSON.parse(localStorage.getItem('Q3_2GBeCabalSignups')) || [];
+
+    // Add the new signup to the array
+    signups.push(signup);
+
+    // Save the updated array back to localStorage
+    localStorage.setItem('Q3_2GBeCabalSignups', JSON.stringify(signups));
+
+    // Notify the user
+    alert('Your signup has been saved!');
+  }
   </script>
 </body>
 </html>

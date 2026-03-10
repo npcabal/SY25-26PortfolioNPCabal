@@ -1,4 +1,4 @@
-}
+<style>
 tr:nth-child(odd) {
     background-color: lightgray;
 }
@@ -7,47 +7,57 @@ p {
     color: blue;
 }
 </style>
+
+<head>
+    <meta charset="UTF-8">
+    <title>View Signups</title>
+    <link rel="stylesheet" href="styles.css"/>
+</head>
 </head>
 <body>
-<h1>Simple reading from an Object</h1>
-<h2>Signups for Q3_2GBeCabal</h2> 
-<button onclick="displaySignups()">View Signups</button>
-<table id="results" border="1">
-<thead>
-  <tr>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Category</th>
-  </tr>
-</thead>
-<tbody>
-  <!-- Signups will be dynamically added here -->
-</tbody>
-</table>
-<p id="count"> </p>
-<script>
-function displaySignups() {
-  // Retrieve signups from localStorage
-  const signups = JSON.parse(localStorage.getItem('Q3_2GBeCabalSignups')) || [];
+  <form>
+    <fieldset><br>
+      <label><strong>Signups</strong></label>
+    </fieldset>
+    <fieldset><label>Here are the signups</label></fieldset> 
+    <button onclick="displaySignups()">View Signups</button>
+    <table id="results" border="1">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Signups will be dynamically added here -->
+    </tbody>
+    </table>
+    <p id="count"> </p>
+    <script>
+    function displaySignups() {
+      // Retrieve signups from localStorage
+      const signups = JSON.parse(localStorage.getItem('Q3_2GBeCabalSignups')) || [];
 
-  // Get the table body element
-  const tableBody = document.querySelector('#results tbody');
-  tableBody.innerHTML = ''; // Clear existing rows
+      // Get the table body element
+      const tableBody = document.querySelector('#results tbody');
+      tableBody.innerHTML = ''; // Clear existing rows
 
-  // Populate the table with signups
-  signups.forEach((signup, index) => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${signup.name}</td>
-      <td>${signup.email}</td>
-      <td>${signup.category}</td>
-    `;
-    tableBody.appendChild(row);
-  });
+      // Populate the table with signups
+      signups.forEach((signup, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${signup.name}</td>
+          <td>${signup.email}</td>
+          <td>${signup.category}</td>
+        `;
+        tableBody.appendChild(row);
+      });
 
-  // Update the count
-  document.getElementById('count').textContent = `Total Signups: ${signups.length}`;
-}
-</script>
+      // Update the count
+      document.getElementById('count').textContent = `Total Signups: ${signups.length}`;
+    }
+  </script>
+  </form>
 </body>
 </html>
