@@ -1,18 +1,18 @@
-<style>
-tr:nth-child(odd) {
-    background-color: lightgray;
-}
-
-p {
-    color: blue;
-}
-</style>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>View Signups</title>
     <link rel="stylesheet" href="styles.css"/>
-</head>
+    <style>
+        tr:nth-child(odd) {
+            background-color: lightgray;
+        }
+
+        p {
+            color: blue;
+        }
+    </style>
 </head>
 <body>
   <form>
@@ -20,21 +20,29 @@ p {
       <label><strong>Signups</strong></label>
     </fieldset>
     <fieldset><label>Here are the signups</label></fieldset> 
-    <button onclick="displaySignups()">View Signups</button>
+    <button type="button" onclick="displaySignups()">View Signups</button>
     <table id="results" border="1">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Category</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Signups will be dynamically added here -->
-    </tbody>
+      <thead>
+        <tr>
+          <th>Student ID</th>
+          <th>Full Name</th>
+          <th>Birthday</th>
+          <th>Email</th>
+          <th>Mobile</th>
+          <th>Grade Level</th>
+          <th>Status</th>
+          <th>Club</th>
+          <th>Reason</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Signups will be dynamically added here -->
+      </tbody>
     </table>
-    <p id="count"> </p>
-    <script>
+    <p id="count"></p>
+  </form>
+
+  <script>
     function displaySignups() {
       // Retrieve signups from localStorage
       const signups = JSON.parse(localStorage.getItem('Q3_2GBeCabalSignups')) || [];
@@ -44,12 +52,18 @@ p {
       tableBody.innerHTML = ''; // Clear existing rows
 
       // Populate the table with signups
-      signups.forEach((signup, index) => {
+      signups.forEach((signup) => {
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td>${signup.name}</td>
+          <td>${signup.studentID}</td>
+          <td>${signup.fullName}</td>
+          <td>${signup.birthday}</td>
           <td>${signup.email}</td>
-          <td>${signup.category}</td>
+          <td>${signup.mobile}</td>
+          <td>${signup.gradeLevel}</td>
+          <td>${signup.status}</td>
+          <td>${signup.club}</td>
+          <td>${signup.reason}</td>
         `;
         tableBody.appendChild(row);
       });
@@ -58,6 +72,5 @@ p {
       document.getElementById('count').textContent = `Total Signups: ${signups.length}`;
     }
   </script>
-  </form>
 </body>
 </html>
