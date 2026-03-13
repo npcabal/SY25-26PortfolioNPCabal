@@ -61,81 +61,95 @@
   </form>
 
   <script>
-    let movies=JSON.parse(localStorage.getItem('movies'))||[];
-    let currentRating=0;
-
+    let movies = JSON.parse(localStorage.getItem('movies')) || [];
+    let currentRating = 0;
+  
     // Star rating
-    const stars=document.querySelectorAll('.star');
+    const stars = document.querySelectorAll('.star');
     stars.forEach(star =>{
-      star.addEventListener('click',function(){
-        currentRating=this.getAttribute('data-value');
+      star.addEventListener('click', function(){
+        currentRating = this.getAttribute('data-value');
         document.getElementById('rating').value=currentRating;
         updateStarDisplay();
       });
-      
+  
       star.addEventListener('mouseover',function(){
         const hoverValue=this.getAttribute('data-value');
-        stars.forEach(s =>{
+        stars.forEach(s=>{
           s.classList.toggle('filled',s.getAttribute('data-value')<=hoverValue);
         });
       });
     });
-
-    document.getElementById('ratingStars').addEventListener('mouseleave',updateStarDisplay);
-
+  
+    document.getElementById('ratingStars').addEventListener('mouseleave', updateStarDisplay);
+  
     function updateStarDisplay(){
-      stars.forEach(star =>{
-        star.classList.toggle('filled',star.getAttribute('data-value')<=currentRating);
+      stars.forEach(star=>{
+        star.classList.toggle('filled', star.getAttribute('data-value') <= currentRating);
       });
     }
-
-    function addMovie(event){
+  
+    function addMovie(event) {
       event.preventDefault();
-      
-      const title=document.getElementById('title').value;
-      const year=document.getElementById('year').value;
-      const genre=document.getElementById('genre').value;
+  
+      const title=document.getElementById('title').value.trim(); // Remove extra spaces
+      const year =document.getElementById('year').value;
+      const genre= document.getElementById('genre').value;
       const rating=document.getElementById('rating').value;
-
-      if (title.trim()===''){
+  
+      if (title === '') {
         alert('Enter a movie title!!! 😠');
         return;
       }
-
-      const movie={
-        id:Date.now(),
-        title,
-        year,
-        genre,
-        rating
-      };
-
-      movies.push(movie);
-      localStorage.setItem('movies', JSON.stringify(movies));
-      
+  
+      // Check if movie already exists (same title and year)
+      const existingMovieIndex = movies.findIndex(
+        movie => movie.title.toLowerCase() === title.toLowerCase() && movie.year === year
+      );
+  
+      if (existingMovieIndex!== -1){
+        // Update existing movie details
+        movies[existingMovieIndex].genre=genre;
+        movies[existingMovieIndex].rating=rating;
+        alert('Movie updated successfully!');
+      } else {
+        // Add new movie
+        const movie={
+          id:Date.now(),
+          title,
+          year,
+          genre,
+          rating
+        };
+      }
+  
+      // Save to localStorage
+      localStorage.setItem('movies',JSON.stringify(movies));
+  
+      // Display updated ML
       displayMovies();
-      
-      // Reset
+  
+      // Reset form
       document.querySelector('form').reset();
       currentRating=0;
       updateStarDisplay();
     }
-
+  
     function displayMovies(){
       const movieList=document.getElementById('movieList');
       movieList.innerHTML='';
-
-      if(movies.length===0){
+  
+      if (movies.length===0){
         movieList.innerHTML='<fieldset><label>No movies added yet.</label></fieldset>';
         return;
       }
-
+  
       movies.forEach(movie=>{
         const stars='★'.repeat(movie.rating)+'☆'.repeat(5-movie.rating);
         const movieDiv=document.createElement('div');
         movieDiv.className='movie-item';
         movieDiv.innerHTML=`
-          <strong>${movie.title}</strong> (${movie.year}) - 
+          <strong>${movie.title} </strong>(${movie.year}) -
           ${movie.genre}<br>
           Rating: ${stars} (${movie.rating}/5)
           <button type="button" style="margin-top: 8px; padding: 4px 8px; font-size: 12px;" onclick="deleteMovie(${movie.id})">Delete</button>
@@ -143,18 +157,21 @@
         movieList.appendChild(movieDiv);
       });
     }
-
+  
     function deleteMovie(id){
-      movies=movies.filter(m=>m.id!==id);
-      localStorage.setItem('movies',JSON.stringify(movies));
-      displayMovies();
+      const confirmDelete=confirm('Delete this movie?');
+      if(confirmDelete){
+        movies=movies.filter(m=>m.id!==id);
+        localStorage.setItem('movies',JSON.stringify(movies));
+        displayMovies();
+      }
     }
-
+  
     function reset(){
       currentRating=0;
       updateStarDisplay();
     }
-
+  
     // Display movies on load
     displayMovies();
   </script>
