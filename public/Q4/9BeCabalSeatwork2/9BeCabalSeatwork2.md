@@ -100,15 +100,53 @@
 
 - Challenge: 
     * What changes that you have to do on the code that will position .notice box on the top right corner of the .content box? Please write the code on paper as well (both html and css on the part of .notice and .content).
+      - 
+      <style>
+        .content {
+          background: lightyellow;
+          width: 300px;
+          height: 200px;
+          position: relative; top: 66px; left: 200px;
+          z-index: 1;
+        }    
+        .notice {
+          position: relative;
+          top: 0px;
+          left: 0px;
+          background: orange;
+          padding: 10px;
+          z-index: 2;
+        }
+      </style>
+      </head>
+      <body>
+        <div class="content">Main Content
+          <div class="notice">Notice!</div> 
+        </div>
+      </body>
+
+
     * Try to change the position of .content to relative then to fixed. What do you observed each time?
+      - When I changed its position to relative, the main content goes below the sidebar. After putting it to fixed, it returned to its position when it was absolute.  
+
     * What do you observe on about the effect of z-index on .notice and .content boxes?
+      - The z-index changes the elements' position on where it is layered. The z-index of .notice is higher than .content, so it appears on top of .content.
 
 3. Please answer the following reflection questions (15 minutes)
 
     a. Could you summarize the differences between the CSS position values (static, relative, absolute, fixed)? 
+      - Static is the default for elements. Static elements are not affected by top, left, right, bottom, or z-index.
+      - Relative elements still remain in the normal document flow, but you can change its original position using top, bottom, let, or right.
+      - Absolute elements are removed from the normal document flow, so other elements behave like it does not exist. It's positioned relative to its nearest ancestor or any ancestor with a position not static.
+      - Fixed elements are like absoliute elements, but they are positioned relative to the browser window or viewport. Even if you scroll, it is still in the same location.
 
     b. How does absolute positioning depend on its parent element?
+      - Absolute positioning depends on its parent element by looking up the DOM tree for the first ancestor that has a position other than static. 
 
     c. How do you differentiate sticky from fixed (you can research on sticky)?
+      - Fixed is positioned relative to the viewport. The position stays the same even if you scroll.
+      - Sticky is positioned relative to its nearest scrolling ancestor and parent container.    
 
     d. If you were designing a webpage for a school event, how might you use positioning to highlight important information? Please give concrete examples.
+      - If I would design a webpage for a school event, I will use it for a button that has a sticky position.
+        - Example, there is a website for a concert registration and the button is on the center of the screen before you scroll. There are details and guide at the bottom, and it is very long. For instance, you saw a detail at the near bottom of the document that made you want to answer the form right away. Instead of going all the way back up again just to register, I could use the sticky position to the button area so the user can press it whenever they are ready.
